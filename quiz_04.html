@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informatik-Basics 4 – Sequenz, Bedingung und Wiederholung</title><style>
+:root{--bg:#f3f6fa;--card:#fff;--text:#172033;--muted:#5c667a;--accent:#315efb;--good:#16803a;--bad:#b42318;--border:#d8deea}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#172033;color:#fff;padding:28px 18px}
+header .wrap,main{max-width:900px;margin:auto}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)} header p{margin:0;color:#d8dfef}
+main{padding:24px 16px 48px}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin:16px 0;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.qnum{font-size:13px;color:var(--muted);font-weight:bold;text-transform:uppercase;letter-spacing:.04em}.question{font-size:20px;font-weight:bold;margin:8px 0 14px}
+.option{display:block;border:1px solid var(--border);padding:11px 12px;border-radius:10px;margin:8px 0;cursor:pointer;background:#fff}.option:hover{border-color:#9eabcb}
+input[type=radio],input[type=checkbox]{margin-right:9px}.text-answer{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;font-size:16px}
+.feedback{display:none;margin-top:12px;padding:10px 12px;border-radius:9px;font-size:15px}.feedback.good{display:block;background:#eaf7ee;color:#0c5b2a}.feedback.bad{display:block;background:#fff0ee;color:#8b1a12}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn{border:0;border-radius:10px;padding:12px 18px;font-size:16px;font-weight:bold;cursor:pointer}.primary{background:var(--accent);color:#fff}.secondary{background:#e8ecf5;color:#172033}
+#result{font-size:22px;font-weight:bold}.small{color:var(--muted);font-size:14px}.topbar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{background:#e9edff;color:#2947b8;border-radius:999px;padding:7px 11px;font-size:14px;font-weight:bold}
+</style></head>
+<body>
+<header><div class="wrap"><div class="topbar"><div><h1>Informatik-Basics 4 – Sequenz, Bedingung und Wiederholung</h1><p>Stunde 4 · Informatik-Basics · Klasse 9</p></div><div class="badge">Selbstkontrolle</div></div></div></header>
+<main>
+<div class="card"><strong>So funktioniert's:</strong> Bearbeite alle Aufgaben. Bei Aufgaben mit mehreren richtigen Antworten steht das ausdrücklich dabei. Am Ende klickst du auf <strong>Auswerten</strong>.</div>
+<div id="quiz"></div>
+<div class="card" id="resultBox"><div id="result">Noch nicht ausgewertet</div><p id="resultText" class="small">Bearbeite alle Aufgaben und klicke anschließend auf „Auswerten“.</p>
+<div class="actions"><button class="btn primary" onclick="check()">Auswerten</button><button class="btn secondary" onclick="resetQuiz()">Nochmal versuchen</button></div></div>
+</main>
+<script>
+const DATA = {"questions": [{"type": "single", "q": "Was ist eine Sequenz beim Programmieren?", "opts": ["Eine geordnete Folge von Befehlen", "Ein Passwort", "Eine Datei", "Eine Internetadresse"], "ans": [0], "exp": "Eine Sequenz besteht aus Befehlen, die in einer bestimmten Reihenfolge ausgeführt werden."}, {"type": "single", "q": "Welches Beispiel beschreibt eine Bedingung?", "opts": ["Gehe 5 Schritte", "Wiederhole 4-mal", "Wenn die Wand berührt wird, drehe dich um", "Speichere die Datei"], "ans": [2], "exp": "Bei einer Bedingung wird geprüft, ob etwas zutrifft."}, {"type": "single", "q": "Was bedeutet SONST in einer Wenn-Dann-Sonst-Struktur?", "opts": ["Der Programmablauf endet immer", "Es wird festgelegt, was geschieht, wenn die Bedingung nicht erfüllt ist", "Die Bedingung wird gelöscht", "Alle Befehle werden wiederholt"], "ans": [1], "exp": "Der SONST-Zweig gilt für den Fall, dass die Bedingung nicht erfüllt ist."}, {"type": "single", "q": "Welche Lösung ist für vier gleiche Schritte am sinnvollsten?", "opts": ["Viermal denselben Befehl einzeln schreiben", "Eine Wiederholung mit 4 Durchläufen verwenden", "Vier Bedingungen schreiben", "Vier Variablen anlegen"], "ans": [1], "exp": "Gleiche Abläufe lassen sich mit einer Schleife kompakter beschreiben."}, {"type": "multi", "q": "Welche Begriffe gehören zu grundlegenden Programmierstrukturen?", "opts": ["Sequenz", "Bedingung", "Wiederholung", "Dateiendung"], "ans": [0, 1, 2], "exp": "Sequenz, Bedingung und Wiederholung sind grundlegende Kontrollstrukturen."}, {"type": "single", "q": "„Wenn Punkte mindestens 10 sind, zeige ‚Gewonnen‘, sonst zeige ‚Weiterspielen‘.“ Welche Struktur ist das?", "opts": ["Nur eine Sequenz", "Eine Alternative", "Nur eine Wiederholung", "Eine Dateiverwaltung"], "ans": [1], "exp": "Es gibt zwei mögliche Wege: einen für erfüllte und einen für nicht erfüllte Bedingung."}, {"type": "text", "q": "Wie nennt man eine Wiederholung beim Programmieren auch?", "answers": ["schleife", "eine schleife"], "exp": "Eine Wiederholung wird häufig Schleife genannt."}, {"type": "single", "q": "Ein Programm soll solange weiterlaufen, bis ein Ziel erreicht ist. Welches Prinzip wird dafür besonders gebraucht?", "opts": ["Wiederholung", "Dateiendung", "Hardware", "Ordner"], "ans": [0], "exp": "Ein wiederholter Ablauf eignet sich für Schritte, die bis zu einem bestimmten Zustand ausgeführt werden."}, {"type": "multi", "q": "Welche Aussagen passen zu einer Bedingung?", "opts": ["Sie prüft, ob etwas zutrifft", "Sie kann eine Entscheidung im Programm auslösen", "Sie muss immer 100-mal wiederholt werden", "Sie kann Teil einer Wenn-Dann-Struktur sein"], "ans": [0, 1, 3], "exp": "Bedingungen prüfen einen Sachverhalt und steuern abhängig davon den Programmablauf."}, {"type": "single", "q": "Was ist der Vorteil einer Schleife?", "opts": ["Sie macht Hardware schneller", "Sie vermeidet unnötiges mehrfaches Schreiben gleicher Befehle", "Sie speichert automatisch jede Datei", "Sie ersetzt jede Bedingung"], "ans": [1], "exp": "Wiederholte Befehle können mit einer Schleife übersichtlich zusammengefasst werden."}]};
+function norm(s){return (s||"").toLowerCase().trim().replace(/\s+/g,"").replace(/[ä]/g,"ae").replace(/[ö]/g,"oe").replace(/[ü]/g,"ue").replace(/[ß]/g,"ss");}
+function render(){
+ const root=document.getElementById("quiz"); root.innerHTML="";
+ DATA.questions.forEach((q,i)=>{
+  const card=document.createElement("section"); card.className="card"; card.id="q"+i;
+  card.innerHTML=`<div class="qnum">Aufgabe ${i+1} von ${DATA.questions.length}</div><div class="question">${q.q}</div>`;
+  if(q.type==="single"||q.type==="multi"){
+    q.opts.forEach((o,j)=>{
+      const lab=document.createElement("label"); lab.className="option";
+      lab.innerHTML=`<input type="${q.type==="single"?"radio":"checkbox"}" name="q${i}" value="${j}"> ${o}`;
+      card.appendChild(lab);
+    });
+  } else {
+    const inp=document.createElement("input"); inp.className="text-answer"; inp.name="q"+i; inp.placeholder="Deine Antwort …"; card.appendChild(inp);
+  }
+  const fb=document.createElement("div"); fb.className="feedback"; fb.id="fb"+i; card.appendChild(fb);
+  root.appendChild(card);
+ });
+}
+function check(){
+ let score=0;
+ DATA.questions.forEach((q,i)=>{
+   let ok=false;
+   if(q.type==="single"||q.type==="multi"){
+     const chosen=[...document.querySelectorAll(`[name="q${i}"]:checked`)].map(x=>Number(x.value)).sort((a,b)=>a-b);
+     const ans=[...q.ans].sort((a,b)=>a-b);
+     ok=chosen.length===ans.length && chosen.every((v,k)=>v===ans[k]);
+   }else{
+     const val=norm(document.querySelector(`[name="q${i}"]`).value);
+     ok=q.answers.some(a=>norm(a)===val);
+   }
+   if(ok) score++;
+   const fb=document.getElementById("fb"+i);
+   fb.className="feedback "+(ok?"good":"bad");
+   fb.textContent=(ok?"Richtig. ":"Noch nicht richtig. ")+q.exp;
+ });
+ const pct=Math.round(score/DATA.questions.length*100);
+ document.getElementById("result").textContent=`${score} von ${DATA.questions.length} Punkten (${pct} %)`;
+ let msg = pct>=90?"Sehr sicher!":pct>=70?"Gute Grundlage.":pct>=50?"Schon einiges geschafft – wiederhole die unsicheren Bereiche.":"Schau dir die Grundlagen noch einmal an und probiere das Quiz erneut.";
+ document.getElementById("resultText").textContent=msg;
+ document.getElementById("resultBox").scrollIntoView({behavior:"smooth"});
+}
+function resetQuiz(){
+ document.querySelectorAll("input").forEach(x=>{if(x.type==="radio"||x.type==="checkbox")x.checked=false;else x.value=""});
+ document.querySelectorAll(".feedback").forEach(x=>{x.style.display="";x.className="feedback";x.textContent=""});
+ document.getElementById("result").textContent="Noch nicht ausgewertet";
+ document.getElementById("resultText").textContent="Bearbeite alle Aufgaben und klicke anschließend auf „Auswerten“.";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+render();
+</script></body></html>
